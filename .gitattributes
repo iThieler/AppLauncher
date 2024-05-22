@@ -1,2 +1,20 @@
-# Auto detect text files and perform LF normalization
-* text=auto
+# Set the end-of-line convention to native (LF for Unix, CRLF for Windows)
+* text=auto eol=lf
+
+# Exceptions for binary files and images
+*.ico binary
+*.exe binary
+*.dll binary
+*.jpg binary
+*.png binary
+*.gif binary
+*.bmp binary
+*.tif binary
+*.tiff binary
+
+# Allow exception for specific files to be treated as text
+*.py text
+*.txt text
+*.html text
+*.css text
+*.js text
