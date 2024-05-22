@@ -9,7 +9,7 @@
   <a href="https://ko-fi.com/U7U3FUTLF"><img src="https://img.shields.io/badge/%E2%98%95-Buy%20me%20a%20coffee-red" /></a>
 </p><br><br>
 
-<p align="center"><img src="https://github.com/home-assistant/brands/blob/master/core_integrations/proxmoxve/icon.png?raw=true" height="100"/></p>
+<p align="center"><img src="https://raw.githubusercontent.com/iThieler/AppLauncher/main/logo.ico" height="100"/></p>
 
 This script performs the following tasks:
 - Downloads a file from a specified URL.
