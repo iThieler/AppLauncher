@@ -19,7 +19,7 @@ This script performs the following tasks:
 ## Usage
 Run the following in the command line:
 ```bash
-python launcher.py [<URL> <Process Name>]
+python launcher.py [URL] [ProcessName]
 ```
 Example:
 ```bash
