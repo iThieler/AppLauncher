@@ -54,6 +54,8 @@ from queue import Queue, Empty
 from PIL import Image
 import tempfile
 
+CURRENT_VERSION = "1.0.1"
+
 # Set Logging-Configuration
 log_file_path = os.path.join(tempfile.gettempdir(), 'der-iThieler_AppLauncher.log')
 logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s', filename=log_file_path, filemode='w')
@@ -147,6 +149,25 @@ def open_file_and_watch(url, process_name, temp_file, progress_queue, stop_event
 
     download_file(url, temp_file, progress_queue, on_download_complete)
 
+# This function sends a request to the GitHub API to retrieve the latest version of the program from the repository.
+def check_for_updates():
+    try:
+        response = requests.get("https://api.github.com/repos/iThieler/AppLauncher/releases/latest")
+        response.raise_for_status()
+        latest_version = response.json()["tag_name"]
+
+        # Entferne die Punkte aus den Versionsnummern und vergleiche die resultierenden Zahlen
+        current_version_number = int(CURRENT_VERSION.replace('.', ''))
+        latest_version_number = int(latest_version.replace('.', ''))
+
+        if latest_version_number > current_version_number:
+            messagebox.showinfo("Update verfügbar",
+                                f"Update verfügbar\nGenutzte Version: {CURRENT_VERSION}\nVerfügbare Version: {latest_version}")
+        else:
+            messagebox.showinfo("Updateprüfung", "Die genutzte Version ist aktuell.")
+    except requests.RequestException as e:
+        messagebox.showerror("Fehler", f"Fehler bei der Updateprüfung: {e}")
+
 # Function for opening the homepage
 def open_homepage():
     webbrowser.open("https://der-ithieler.de")
@@ -162,6 +183,7 @@ def show_systray_icon():
     menu = pystray.Menu(
         pystray.MenuItem("der iThieler - Homepage", open_homepage),  # Menüpunkt für die Webseite
         pystray.MenuItem("der iThieler - Github", open_Github),  # Menüpunkt für die Webseite
+        pystray.MenuItem("Auf Updates prüfen", lambda: root.after(0, check_for_updates)),  # Menüpunkt für Update-Prüfung
         #pystray.MenuItem("Beenden", exit_program)
         )
     systray = pystray.Icon("der iThieler - AppLauncher", icon, "der iThieler - AppLauncher", menu)
@@ -242,6 +264,10 @@ def start_download(url, process_name):
     if process_name:
         process_entry.insert(0, process_name)
         validate_entries()
+    
+    version_label = ttk.Label(root, text=f"Version: {CURRENT_VERSION} - Klick prüft auf Updates", foreground="gray", cursor="hand2")
+    version_label.pack(side="bottom", pady=5)
+    version_label.bind("<Button-1>", lambda e: check_for_updates())
 
     update_progress_bar()
     root.mainloop()
