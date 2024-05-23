@@ -8,7 +8,7 @@
 
 <h1 align="center" id="heading">Changelog</h1>
 
-## [Version 1.0.1] - Update Check Feature
+## [Version 1.0.1] - Update Check Feature - 2024-05-23
 
 ### Changed
 This release introduces a new feature that allows users to check for the latest version of the application.
